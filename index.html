@@ -1,0 +1,1178 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Unit 8 Sedia Cergas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: one chunky, tap-friendly column (max 720px) built for phones.
+   Home -> pick topic -> pick activity. Quiz progress is a child hanging along a monkey bar.
+   No audio anywhere on the page. */
+:root{
+  --bg:#EAF6FF; --surface:#FFFFFF; --surface-2:#F2FAFF; --ink:#11324D; --muted:#46657F;
+  --line:#C6DEEE; --edge:#11324D; --sky:#BFE5FF;
+  --orange:#FF7A2F; --orange-d:#C9540F; --on-orange:#11324D; --sel-bg:#FFF0E3;
+  --sun:#FFC83D; --star-edge:#B98200;
+  --hill1:#5CC48A; --hill2:#2FA36B;
+  --good:#17824F; --good-bg:#DCF5E7; --bad:#C42F4E; --bad-bg:#FFE3E9;
+  --focus:#0A66C2; --shadow:0 10px 24px rgba(17,50,77,.10);
+  --font-display:'Fredoka',system-ui,sans-serif; --font-body:'Nunito',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C1B2A; --surface:#14283C; --surface-2:#1A3249; --ink:#EAF4FF; --muted:#9CB8CF;
+    --line:#274560; --edge:#6C93B3; --sky:#12344F;
+    --orange:#FF9150; --orange-d:#C9540F; --on-orange:#10263A; --sel-bg:#3A2A1E;
+    --sun:#FFD65C; --star-edge:#FFE9A0;
+    --hill1:#237553; --hill2:#16573D;
+    --good:#55D394; --good-bg:#0F3B2B; --bad:#FF7C97; --bad-bg:#46202E;
+    --focus:#8CC8FF; --shadow:0 10px 24px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C1B2A; --surface:#14283C; --surface-2:#1A3249; --ink:#EAF4FF; --muted:#9CB8CF;
+  --line:#274560; --edge:#6C93B3; --sky:#12344F;
+  --orange:#FF9150; --orange-d:#C9540F; --on-orange:#10263A; --sel-bg:#3A2A1E;
+  --sun:#FFD65C; --star-edge:#FFE9A0;
+  --hill1:#237553; --hill2:#16573D;
+  --good:#55D394; --good-bg:#0F3B2B; --bad:#FF7C97; --bad-bg:#46202E;
+  --focus:#8CC8FF; --shadow:0 10px 24px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:1.0625rem;line-height:1.5;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:720px;margin-inline:auto}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;line-height:1.15;margin:0;text-wrap:balance}
+p{margin:0}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+[hidden]{display:none!important}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px}
+.icon-btn{flex:none;width:46px;height:46px;border-radius:14px;border:2px solid var(--edge);border-bottom-width:4px;background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0;touch-action:manipulation}
+.icon-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn .mute{display:none}
+.icon-btn[aria-pressed="false"] .wave{display:none}
+.icon-btn[aria-pressed="false"] .mute{display:block}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:1.2rem}
+.brand i{display:block;width:14px;height:14px;border-radius:50%;background:var(--orange);box-shadow:0 0 0 4px var(--sel-bg)}
+.chip{font-family:var(--font-body);font-weight:800;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:2px solid var(--line);border-radius:99px;padding:2px 10px}
+
+/* buttons */
+.btn{font-family:var(--font-display);font-weight:600;font-size:1.1rem;color:var(--ink);background:var(--surface);border:2px solid var(--edge);border-bottom-width:5px;border-radius:14px;padding:10px 20px;min-height:52px;cursor:pointer;touch-action:manipulation;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:active:not(:disabled){transform:translateY(2px);border-bottom-width:3px}
+.btn.primary{background:var(--orange);color:var(--on-orange);border-color:var(--orange-d)}
+.btn.small{min-height:44px;font-size:1rem;padding:6px 14px}
+.btn:disabled{opacity:.5;cursor:default}
+
+/* panels */
+.panel{background:var(--surface);border:2px solid var(--line);border-bottom-width:5px;border-radius:18px;padding:16px}
+.eyebrow{font-weight:800;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.section-title{font-size:1.35rem;margin-block:28px 12px;display:flex;align-items:center;gap:10px}
+.section-title b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--orange);color:var(--on-orange);font-size:1rem}
+
+/* hero */
+.hero{border:2px solid var(--line);border-bottom-width:5px;border-radius:22px;overflow:hidden;background:var(--surface)}
+.hero svg{display:block;width:100%;height:auto;background:var(--sky)}
+.hero .copy{padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px}
+.hero h1{font-size:clamp(1.9rem,8vw,3rem);text-transform:uppercase;letter-spacing:.02em}
+.hero .lead{color:var(--muted);font-weight:700}
+.sun{fill:var(--sun)} .hill1{fill:var(--hill1)} .hill2{fill:var(--hill2)}
+.frame{stroke:var(--ink);fill:none;stroke-width:7;stroke-linecap:round}
+.swing{transform-origin:300px 70px;animation:swing 2.6s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+
+/* name */
+.namebox{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.namebox label{font-family:var(--font-display);font-weight:600;font-size:1.15rem}
+.namebox input{font:inherit;font-weight:700;font-size:1.15rem;padding:12px 14px;min-height:52px;border-radius:12px;border:2px solid var(--edge);background:var(--surface-2);color:var(--ink);width:100%}
+.namebox input::placeholder{color:var(--muted);font-weight:500}
+.msg{min-height:1.4em;font-weight:800;color:var(--bad)}
+.msg.ink{color:var(--ink)}
+.shake{animation:shake .4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+
+/* topics + games */
+.topics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.topic{text-align:left;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-bottom-width:5px;border-radius:16px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:2px;position:relative;min-height:104px;touch-action:manipulation}
+.topic.wide{grid-column:1/-1;min-height:84px}
+.topic .tt{font-family:var(--font-display);font-weight:600;font-size:1.12rem;line-height:1.2;padding-right:4.5rem}
+.topic .ts{font-size:.85rem;color:var(--muted);font-weight:700}
+.topic .stars{margin-top:auto;padding-top:6px}
+.topic[aria-pressed="true"]{border-color:var(--orange);background:var(--sel-bg)}
+.topic[aria-pressed="true"]::after{content:"Dipilih";position:absolute;top:10px;right:10px;font-size:.7rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;background:var(--orange);color:var(--on-orange);border-radius:99px;padding:1px 8px}
+.games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.game{text-align:left;color:var(--ink);background:var(--surface);border:2px solid var(--edge);border-bottom-width:6px;border-radius:18px;padding:14px;cursor:pointer;display:flex;flex-direction:column;gap:10px;align-items:flex-start;touch-action:manipulation;min-width:0}
+.game:active{transform:translateY(2px);border-bottom-width:4px}
+.game.wide{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;background:var(--sel-bg);border-color:var(--orange-d)}
+.game .gi{flex:none;width:52px;height:52px;border-radius:16px;background:var(--sel-bg);display:grid;place-items:center}
+.game.wide .gi{background:var(--surface)}
+.game .gi svg{width:32px;height:32px;stroke:var(--orange-d);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+:root[data-theme="dark"] .game .gi svg{stroke:var(--orange)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .game .gi svg{stroke:var(--orange)}}
+.game .gt{display:block;font-family:var(--font-display);font-weight:600;font-size:1.15rem;line-height:1.2}
+.game .gs{display:block;font-size:.85rem;color:var(--muted);font-weight:700;line-height:1.3;margin-top:2px}
+.game .stars{margin-top:6px}
+
+/* stars */
+.stars{display:inline-flex;gap:3px}
+.stars svg{width:22px;height:22px}
+.st{stroke-width:1.6;stroke-linejoin:round}
+.st.on{fill:var(--sun);stroke:var(--star-edge)}
+.st.off{fill:none;stroke:var(--muted);opacity:.5}
+
+/* badges */
+.badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px}
+.badge{text-align:center;background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.badge .bn{font-family:var(--font-display);font-weight:600;font-size:.95rem;line-height:1.2}
+.badge .bd{font-size:.74rem;color:var(--muted);font-weight:700;line-height:1.25}
+.medal{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--sun);border:3px solid var(--star-edge)}
+.medal svg{width:24px;height:24px;stroke:#11324D;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.badge.locked .medal{background:var(--surface-2);border-color:var(--line);opacity:.6}
+.badge.locked .medal svg{stroke:var(--muted)}
+.badge.locked .bn{color:var(--muted)}
+
+/* in-game bar */
+.qbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:4px 10px}
+.stats{display:flex;gap:8px;align-items:center;font-family:var(--font-display);font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--line);background:var(--surface);border-radius:99px;padding:3px 12px;font-size:1rem;font-variant-numeric:tabular-nums}
+.pill svg{width:18px;height:18px;fill:var(--orange);stroke:none}
+.pill.hot{border-color:var(--orange);background:var(--sel-bg)}
+.track{position:relative;height:84px;margin:6px 24px 0}
+.rail{position:absolute;left:0;right:0;top:12px;height:8px;border-radius:99px;background:var(--ink)}
+.rail-fill{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--orange);width:0;transition:width .5s ease}
+.rung{position:absolute;top:8px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--surface);border:3px solid var(--ink)}
+.rung.done{background:var(--orange)}
+.kid{position:absolute;top:2px;width:44px;margin-left:-22px;transition:left .5s ease}
+.kid svg{display:block;width:44px;height:62px;overflow:visible}
+.kid .sw{transform-origin:22px 4px;animation:swing 1.8s ease-in-out infinite alternate}
+.count{text-align:center;color:var(--muted);font-weight:800;margin-block:2px 10px}
+
+/* shared card */
+.qcard{background:var(--surface);border:2px solid var(--line);border-bottom-width:6px;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)}
+.qtag{align-self:flex-start;font-weight:800;font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;border-radius:99px;padding:2px 10px;background:var(--sel-bg);color:var(--ink);border:2px solid var(--orange)}
+.qtext{font-size:clamp(1.3rem,5.4vw,1.75rem);line-height:1.3;font-family:var(--font-display);font-weight:500}
+.qtools{display:flex;gap:8px;flex-wrap:wrap}
+.hint{background:var(--surface-2);border:2px dashed var(--edge);border-radius:12px;padding:10px 12px;font-weight:700}
+.options{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;width:100%;min-height:62px;padding:10px 14px;border-radius:16px;border:2px solid var(--edge);border-bottom-width:5px;background:var(--surface);color:var(--ink);cursor:pointer;font-weight:800;font-size:1.08rem;line-height:1.3;touch-action:manipulation}
+.opt:active:not(:disabled){transform:translateY(2px);border-bottom-width:3px}
+.opt .ltr{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--sel-bg);border:2px solid var(--orange);font-family:var(--font-display);font-weight:700}
+.opt:disabled{cursor:default}
+.opt.correct{background:var(--good-bg);border-color:var(--good)}
+.opt.correct .ltr{background:var(--good);border-color:var(--good);color:var(--bg)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad);animation:shake .4s}
+.opt.wrong .ltr{background:var(--bad);border-color:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.55}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf .opt{justify-content:center;min-height:76px;font-family:var(--font-display);font-size:1.45rem;font-weight:600}
+.feedback{border-radius:16px;padding:14px;border:2px solid var(--good);background:var(--good-bg);display:flex;flex-direction:column;gap:6px}
+.feedback.no{border-color:var(--bad);background:var(--bad-bg)}
+.feedback .ft{font-family:var(--font-display);font-weight:600;font-size:1.25rem}
+.feedback .btn{margin-top:8px;align-self:stretch}
+
+/* matching */
+.mhead{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mcol{display:flex;flex-direction:column;gap:10px;min-width:0}
+.mitem{min-height:68px;padding:8px 10px;border-radius:14px;border:2px solid var(--edge);border-bottom-width:5px;background:var(--surface);color:var(--ink);font-weight:800;font-size:1rem;line-height:1.25;cursor:pointer;touch-action:manipulation;overflow-wrap:anywhere}
+.mitem.right{background:var(--surface-2)}
+.mitem.sel{border-color:var(--orange);background:var(--sel-bg);transform:translateY(-2px)}
+.mitem.done{background:var(--good-bg);border-color:var(--good);cursor:default}
+.mitem.bad{animation:shake .4s;border-color:var(--bad);background:var(--bad-bg)}
+
+/* body target */
+.figwrap{background:var(--surface-2);border:2px solid var(--line);border-radius:18px;padding:6px}
+.fig{display:block;width:100%;max-width:420px;height:auto;margin-inline:auto}
+.deco{fill:var(--surface);stroke:var(--line);stroke-width:2}
+.zone{cursor:pointer;outline:none}
+.zone rect{fill:var(--sky);stroke:var(--edge);stroke-width:2;transition:fill .15s}
+.zone:focus-visible rect{stroke:var(--focus);stroke-width:4}
+.zone.on rect{fill:var(--orange)}
+.zone.good rect{fill:var(--good);stroke:var(--good)}
+.zone.bad rect{fill:var(--bad);stroke:var(--bad)}
+.zone.miss rect{fill:none;stroke:var(--good);stroke-width:4;stroke-dasharray:6 4}
+.fig.locked .zone{cursor:default}
+.fig text{fill:var(--muted);font-family:var(--font-body);font-weight:800;font-size:13px}
+.picked{font-weight:800;min-height:1.5em}
+
+/* letters */
+.slots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;--n:6}
+.slot{flex:0 0 calc((100% - (var(--n) - 1) * 6px) / var(--n));max-width:50px;aspect-ratio:1;border-radius:12px;border:2px dashed var(--edge);background:var(--surface-2);display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:1.35rem;color:var(--ink);cursor:pointer;padding:0}
+.slot.fill{border-style:solid;background:var(--sel-bg);border-color:var(--orange)}
+.slot.good{background:var(--good-bg);border:2px solid var(--good)}
+.slot.bad{background:var(--bad-bg);border:2px solid var(--bad);animation:shake .4s}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.tile{width:50px;height:54px;border-radius:12px;border:2px solid var(--edge);border-bottom-width:5px;background:var(--surface);font-family:var(--font-display);font-weight:700;font-size:1.4rem;color:var(--ink);cursor:pointer;touch-action:manipulation;padding:0}
+.tile:active:not(:disabled){transform:translateY(2px);border-bottom-width:3px}
+.tile:disabled{opacity:.2;cursor:default}
+
+/* lightning */
+.tbar{height:14px;border-radius:99px;background:var(--line);overflow:hidden}
+.tbar i{display:block;height:100%;width:100%;background:var(--orange)}
+.tbar.low i{background:var(--bad)}
+.statement{font-family:var(--font-display);font-weight:500;font-size:clamp(1.35rem,5.6vw,1.8rem);line-height:1.3;min-height:4.2em;display:flex;align-items:center}
+
+/* flash cards */
+.flash{display:block;width:100%;height:260px;perspective:1000px;background:none;border:0;padding:0;color:var(--ink);cursor:pointer;margin-block:6px 16px}
+.flash-in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flash.flip .flash-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:22px;border:2px solid var(--edge);border-bottom-width:7px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
+.face.front{background:var(--surface)}
+.face.back{background:var(--sel-bg);transform:rotateY(180deg)}
+.face .term{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,7vw,2.3rem);line-height:1.15}
+.face .def{font-weight:800;font-size:1.2rem;line-height:1.4}
+.face .tap{font-size:.85rem;font-weight:800;color:var(--muted)}
+.ctrls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ctrls .wide{grid-column:1/-1}
+
+/* move challenge */
+.safe{background:var(--sel-bg);border:2px solid var(--orange);border-radius:14px;padding:10px 14px;font-weight:800;margin-bottom:14px}
+.glist{display:grid;gap:10px}
+.gitem{display:flex;align-items:center;gap:12px;text-align:left;width:100%;min-height:64px;padding:10px 14px;border-radius:16px;border:2px solid var(--edge);border-bottom-width:5px;background:var(--surface);color:var(--ink);cursor:pointer;touch-action:manipulation}
+.gitem .gn{display:block;font-family:var(--font-display);font-weight:600;font-size:1.08rem;line-height:1.2}
+.gitem .gm{display:block;font-size:.82rem;color:var(--muted);font-weight:700}
+.gitem .gst{margin-left:auto;flex:none;font-size:.75rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border:2px solid var(--line);border-radius:99px;padding:2px 10px;color:var(--muted)}
+.gitem.sel{border-color:var(--orange);background:var(--sel-bg)}
+.gitem.done .gst{background:var(--good);border-color:var(--good);color:var(--bg)}
+.gpanel{margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.gpanel .how{font-weight:700;max-width:34ch}
+.ring{position:relative;width:150px;height:150px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:11}
+.ring .bg{stroke:var(--line)}
+.ring .fg{stroke:var(--orange);stroke-linecap:round;stroke-dasharray:326.7;stroke-dashoffset:0}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:2.6rem;font-variant-numeric:tabular-nums}
+.bigcount{font-family:var(--font-display);font-weight:700;font-size:3.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.bigbtn{min-width:min(100%,260px);min-height:68px;font-size:1.4rem}
+
+/* result / sijil */
+.sijil{position:relative;text-align:center;background:var(--surface);border:3px solid var(--edge);border-radius:24px;padding:26px 18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:8px;outline:2px solid var(--orange);outline-offset:-10px}
+.sijil .sname{font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,8vw,2.6rem);line-height:1.1;overflow-wrap:anywhere}
+.sijil .sline{font-weight:800;color:var(--muted)}
+.sijil .stars svg{width:44px;height:44px}
+.sijil .sscore{font-family:var(--font-display);font-weight:700;font-size:3rem;line-height:1;font-variant-numeric:tabular-nums}
+.sijil .smsg{font-weight:800;max-width:30ch}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;margin-top:8px;border-top:2px dashed var(--line);padding-top:12px}
+.meta dt{font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.meta dd{margin:0;font-weight:800;font-size:.95rem;font-variant-numeric:tabular-nums}
+.note{margin-top:14px;padding:12px 14px;border-radius:14px;background:var(--sel-bg);border:2px solid var(--orange);font-weight:800}
+.newbadges{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.nb{display:flex;align-items:center;gap:12px;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:8px 12px;font-weight:800}
+.nb .bd{font-size:.8rem;color:var(--muted)}
+.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:16px}
+
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+@media (prefers-reduced-motion: reduce){
+  .swing,.kid .sw,.opt.wrong,.slot.bad,.mitem.bad,.shake{animation:none}
+  .flash-in,.rail-fill,.kid,.zone rect{transition:none}
+}
+</style>
+
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><i></i><span>Unit 8 Sedia Cergas</span></div>
+    <button class="icon-btn" id="snd" type="button" aria-pressed="true" aria-label="Bunyi dihidupkan" title="Matikan bunyi">
+      <svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="mute" d="M17 9l5 6M22 9l-5 6"/></svg>
+    </button>
+  </header>
+
+  <main>
+  <!-- HOME -->
+  <section id="v-home" class="view">
+    <div class="hero">
+      <svg viewBox="0 0 600 200" role="img" aria-label="Seorang murid bergayut pada palang di taman permainan">
+        <circle class="sun" cx="508" cy="52" r="28"/>
+        <path class="hill1" d="M0 200V132Q120 92 250 128T470 118Q540 108 600 126V200Z"/>
+        <path class="hill2" d="M0 200V160Q150 128 300 160T600 150V200Z"/>
+        <path class="frame" d="M150 184V70H450V184"/>
+        <path class="frame" d="M150 100H450" style="stroke-width:5;opacity:.55"/>
+        <g class="swing">
+          <path d="M290 70L286 96M310 70L314 96" stroke="#F2B48C" stroke-width="7" stroke-linecap="round"/>
+          <rect x="283" y="94" width="34" height="44" rx="12" style="fill:var(--orange)"/>
+          <path d="M290 136L285 168M310 136L315 168" style="stroke:var(--ink)" stroke-width="8" stroke-linecap="round"/>
+          <circle cx="300" cy="86" r="16" fill="#F2B48C"/>
+          <path d="M283 84A17 17 0 0 1 317 84Z" style="fill:var(--sun)"/>
+          <circle cx="294" cy="90" r="1.8" fill="#11324D"/><circle cx="306" cy="90" r="1.8" fill="#11324D"/>
+          <path d="M295 96Q300 100 305 96" stroke="#11324D" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="copy">
+        <p class="eyebrow">Ulang kaji &middot; Pendidikan Jasmani Tahun 2</p>
+        <h1>Unit 8 Sedia Cergas</h1>
+        <p class="lead">Jom Berlari, Sedia Cergas, Ke Taman Rekreasi dan Mari Bergayut. Main, belajar dan kumpul bintang.</p>
+      </div>
+    </div>
+
+    <div class="panel namebox" id="namebox">
+      <label for="name">Siapa nama kamu?</label>
+      <input id="name" type="text" maxlength="24" placeholder="Tulis nama di sini" autocomplete="off" enterkeyhint="done">
+      <p class="msg" id="name-msg" role="status"></p>
+    </div>
+
+    <h2 class="section-title"><b>1</b>Pilih topik</h2>
+    <div class="topics" id="topics"></div>
+
+    <h2 class="section-title"><b>2</b>Pilih aktiviti</h2>
+    <div class="games" id="games"></div>
+
+    <h2 class="section-title" style="margin-top:32px">Lencana kamu</h2>
+    <div class="badges" id="badges"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="v-quiz" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats">
+        <span class="pill" id="q-streak" title="Jawapan betul berturut-turut"><svg viewBox="0 0 24 24"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z"/></svg><span id="q-streak-n">0</span></span>
+        <span class="pill" title="Mata"><span id="q-points-n">0</span> mata</span>
+      </div>
+    </div>
+    <div class="track" id="track" aria-hidden="true">
+      <div class="rail"><div class="rail-fill" id="rail-fill"></div></div>
+      <div id="rungs"></div>
+      <div class="kid" id="kid">
+        <svg viewBox="0 0 44 62"><g class="sw">
+          <path d="M12 4L17 26M32 4L27 26" stroke="#F2B48C" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <rect x="14" y="24" width="16" height="20" rx="6" style="fill:var(--orange)"/>
+          <path d="M18 43L16 58M26 43L28 58" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <circle cx="22" cy="17" r="8.5" fill="#F2B48C"/>
+          <path d="M13 15.5A9.5 9.5 0 0 1 31 15.5Z" style="fill:var(--sun)"/>
+        </g></svg>
+      </div>
+    </div>
+    <p class="count" id="q-count"></p>
+    <article class="qcard">
+      <p class="qtag" id="q-tag"></p>
+      <h2 class="qtext" id="q-text"></h2>
+      <div class="qtools"><button class="btn small" id="q-hint">Petunjuk (-5 mata)</button></div>
+      <p class="hint" id="q-hinttext" hidden></p>
+      <div class="options" id="q-options"></div>
+      <div class="feedback" id="q-feedback" hidden role="status" aria-live="polite">
+        <p class="ft" id="q-ft"></p>
+        <p id="q-fx"></p>
+        <button class="btn primary" id="q-next">Seterusnya</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- MATCH -->
+  <section id="v-match" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats"><span class="pill" id="m-count">0 / 5</span><span class="pill">Silap <span id="m-miss">0</span></span></div>
+    </div>
+    <div class="mhead">
+      <h2 style="font-size:1.6rem">Padankan Otot</h2>
+      <p style="font-weight:700">Ketik satu senaman, kemudian ketik otot yang dilatih oleh senaman itu.</p>
+    </div>
+    <div class="match"><div class="mcol" id="m-left"></div><div class="mcol" id="m-right"></div></div>
+    <p class="msg ink" id="m-msg" role="status" style="margin-top:12px"></p>
+  </section>
+
+  <!-- BODY TARGET -->
+  <section id="v-sasar" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats"><span class="pill" id="s-count">1 / 8</span><span class="pill"><span id="s-pts">0</span> betul</span></div>
+    </div>
+    <article class="qcard">
+      <p class="qtag" id="s-tag"></p>
+      <h2 class="qtext" id="s-text"></h2>
+      <p style="font-weight:700">Ketik otot yang dilatih pada badan. Ada yang lebih daripada satu.</p>
+      <div class="figwrap"><svg class="fig" id="s-fig" viewBox="0 0 320 300" role="group" aria-label="Badan dari depan dan belakang"></svg></div>
+      <p class="picked" id="s-picked" aria-live="polite"></p>
+      <button class="btn primary" id="s-check" disabled>Semak jawapan</button>
+      <div class="feedback" id="s-feedback" hidden role="status" aria-live="polite">
+        <p class="ft" id="s-ft"></p>
+        <p id="s-fx"></p>
+        <button class="btn primary" id="s-next">Seterusnya</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- LETTERS -->
+  <section id="v-susun" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats"><span class="pill" id="u-count">1 / 6</span><span class="pill"><span id="u-pts">0</span> mata</span></div>
+    </div>
+    <article class="qcard">
+      <p class="qtag" id="u-tag"></p>
+      <h2 class="qtext">Susun huruf menjadi perkataan</h2>
+      <p class="hint" id="u-hint"></p>
+      <div class="slots" id="u-slots"></div>
+      <div class="tiles" id="u-tiles"></div>
+      <div class="qtools" id="u-tools">
+        <button class="btn small" id="u-clear">Kosongkan</button>
+        <button class="btn small" id="u-skip">Tunjuk jawapan</button>
+      </div>
+      <div class="feedback" id="u-feedback" hidden role="status" aria-live="polite">
+        <p class="ft" id="u-ft"></p>
+        <p id="u-fx"></p>
+        <button class="btn primary" id="u-next">Seterusnya</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- LIGHTNING -->
+  <section id="v-kilat" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats"><span class="pill" id="k-count">1 / 10</span><span class="pill"><span id="k-pts">0</span> mata</span></div>
+    </div>
+    <article class="qcard">
+      <p class="qtag" id="k-tag"></p>
+      <div class="tbar" id="k-bar" aria-hidden="true"><i id="k-fill"></i></div>
+      <p class="statement" id="k-text"></p>
+      <div class="tf" id="k-opts">
+        <button class="opt" data-v="1">Betul</button>
+        <button class="opt" data-v="0">Salah</button>
+      </div>
+      <div class="feedback" id="k-feedback" hidden role="status" aria-live="polite">
+        <p class="ft" id="k-ft"></p>
+        <p id="k-fx"></p>
+        <button class="btn primary" id="k-next">Seterusnya</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- FLASH CARDS -->
+  <section id="v-cards" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats"><span class="pill" id="c-count">1 / 1</span></div>
+    </div>
+    <button class="flash" id="flash" aria-label="Ketik untuk membalik kad">
+      <div class="flash-in">
+        <div class="face front"><p class="qtag" id="c-tag"></p><p class="term" id="c-term"></p><p class="tap">Ketik untuk lihat maksud</p></div>
+        <div class="face back"><p class="def" id="c-def"></p><p class="tap">Ketik untuk balik</p></div>
+      </div>
+    </button>
+    <div class="ctrls">
+      <button class="btn" id="c-prev">&lsaquo; Sebelum</button>
+      <button class="btn primary" id="c-next">Seterusnya &rsaquo;</button>
+      <button class="btn wide" id="c-shuffle">Kacau kad</button>
+    </div>
+    <p class="msg ink" id="c-msg" role="status" style="margin-top:12px"></p>
+  </section>
+
+  <!-- MOVE CHALLENGE -->
+  <section id="v-gerak" class="view" hidden>
+    <div class="qbar">
+      <button class="btn small" data-exit>&lsaquo; Keluar</button>
+      <div class="stats"><span class="pill" id="g-count">0 / 6 siap</span></div>
+    </div>
+    <h2 style="font-size:1.6rem;margin-bottom:8px">Cabaran Gerak</h2>
+    <p class="safe">Buat bersama ibu bapa atau penjaga di tempat yang lapang dan selamat. Berhenti jika berasa sakit atau pening.</p>
+    <div class="glist" id="g-list"></div>
+    <article class="qcard gpanel" id="g-panel" style="margin-top:14px" hidden></article>
+    <div class="actions"><button class="btn primary" id="g-finish" disabled>Lihat sijil</button></div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="v-result" class="view" hidden>
+    <article class="sijil" id="sijil">
+      <p class="eyebrow">Sijil Unit 8 Sedia Cergas</p>
+      <p class="sname" id="r-name"></p>
+      <p class="sline" id="r-mode"></p>
+      <div class="stars" id="r-stars"></div>
+      <p class="sscore" id="r-score"></p>
+      <p class="smsg" id="r-msg"></p>
+      <dl class="meta">
+        <div><dt>Tarikh</dt><dd id="r-date"></dd></div>
+        <div><dt id="r-ptl">Mata</dt><dd id="r-points"></dd></div>
+        <div><dt>Guru</dt><dd>Cikgu Azim</dd></div>
+      </dl>
+    </article>
+    <p class="note">Tangkap skrin sijil ini dan hantar kepada cikgu melalui WhatsApp sebagai tanda kehadiran.</p>
+    <div class="newbadges" id="r-badges"></div>
+    <div class="actions">
+      <button class="btn primary" id="r-again">Main lagi</button>
+      <button class="btn" id="r-home">Pilih aktiviti lain</button>
+    </div>
+  </section>
+  </main>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)};
+var RM=false; try{RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+
+/* ================= data ================= */
+var TOPICS={
+  all:{label:'Semua Topik',sub:'Muka surat 58 hingga 62',tag:'Semua topik'},
+  lari:{label:'Jom Berlari',sub:'Muka surat 58',tag:'Jom Berlari'},
+  regang:{label:'Sedia Cergas',sub:'Muka surat 59',tag:'Sedia Cergas'},
+  taman:{label:'Ke Taman Rekreasi',sub:'Muka surat 60 dan 61',tag:'Ke Taman Rekreasi'},
+  bergayut:{label:'Mari Bergayut',sub:'Muka surat 62',tag:'Mari Bergayut'}
+};
+var TF=['Betul','Salah'];
+var Q=[
+ /* Jom Berlari */
+ {t:'lari',q:'Apakah yang perlu kita pakai semasa berlari?',o:['Kasut yang sesuai','Selipar yang rosak','Kasut bertumit tinggi'],a:0,why:'Kasut yang sesuai melindungi kaki kita semasa berlari.',h:'Fikirkan keselamatan kaki.'},
+ {t:'lari',q:'Di manakah tempat yang selamat untuk berlari?',o:['Padang atau taman yang lapang','Jalan raya yang sibuk','Tangga yang licin'],a:0,why:'Kita berlari di tempat yang lapang dan selamat.',h:'Tempat yang jauh daripada kenderaan.'},
+ {t:'lari',q:'Otot manakah yang banyak bekerja semasa berlari?',o:['Otot paha dan betis','Otot dahi','Otot telinga'],a:0,why:'Semasa berlari, otot paha dan otot betis bekerja kuat.',h:'Kita berlari menggunakan kaki.'},
+ {t:'lari',q:'Apakah yang patut kita lakukan selepas berlari?',o:['Minum air','Terus tidur','Makan banyak gula-gula'],a:0,why:'Kita minum air supaya badan tidak kekeringan.',h:'Badan kita berpeluh.'},
+ {t:'lari',q:'Kita berasa sakit semasa berlari. Apakah yang patut kita buat?',o:['Berhenti dan beritahu guru atau ibu bapa','Berlari lebih laju','Diam dan sembunyi'],a:0,why:'Berhenti dan beritahu orang dewasa jika berasa sakit.',h:'Jangan paksa badan.'},
+ {t:'lari',q:'Berlari membantu otot kaki menjadi kuat.',o:TF,a:0,tf:1,why:'Betul. Berlari melatih otot kaki.',h:'Otot yang dilatih menjadi kuat.'},
+ /* Sedia Cergas */
+ {t:'regang',q:'Apakah dua jenis regangan yang kita belajar?',o:['Regangan statik dan dinamik','Regangan besar dan kecil','Regangan merah dan biru'],a:0,why:'Kita belajar regangan statik dan regangan dinamik.',h:'Satu daripadanya bergerak, satu lagi tidak.'},
+ {t:'regang',q:'Regangan statik dan dinamik dapat meningkatkan apa?',o:['Kelenturan badan','Warna kulit','Bunyi suara'],a:0,why:'Regangan meningkatkan kelenturan badan.',h:'Badan jadi mudah membengkok.'},
+ {t:'regang',q:'Semasa regangan statik, badan kita...',o:['Kekal pada satu posisi','Berlari laju','Melompat tinggi'],a:0,why:'Regangan statik ialah kekal pada satu posisi tanpa bergerak.',h:'Statik bermaksud tidak bergerak.'},
+ {t:'regang',q:'Semasa regangan dinamik, badan kita...',o:['Bergerak semasa meregang','Tidak bergerak langsung','Tertidur'],a:0,why:'Regangan dinamik dilakukan sambil badan bergerak.',h:'Dinamik bermaksud bergerak.'},
+ {t:'regang',q:'Berapa saat kita melakukan satu regangan?',o:['10 hingga 20 saat','1 saat sahaja','100 saat'],a:0,why:'Lakukan regangan dalam jangka masa 10 hingga 20 saat.',h:'Kira dalam hati, satu hingga sepuluh atau lebih.'},
+ {t:'regang',q:'Sebelum meregang, kita perlu kenal pasti bahagian apa yang diregang?',o:['Bahagian otot','Bahagian baju','Bahagian buku'],a:0,why:'Kenal pasti bahagian otot yang diregang.',h:'Regangan untuk badan kita.'},
+ {t:'regang',q:'Membongkok ke hadapan sambil cuba menyentuh lantai meregang otot yang mana?',o:['Otot pinggang','Otot dahi','Otot telinga'],a:0,why:'Membongkok ke hadapan meregang otot pinggang.',h:'Bahagian tengah badan.'},
+ {t:'regang',q:'Regangan statik ditahan selama 1 saat sahaja.',o:TF,a:1,tf:1,why:'Salah. Regangan perlu ditahan 10 hingga 20 saat.',h:'Satu saat terlalu singkat.'},
+ /* Ke Taman Rekreasi */
+ {t:'taman',q:'Ramu dan rakan-rakan melakukan aktiviti di stesen apa?',o:['Parcourse','Kantin','Perpustakaan'],a:0,why:'Mereka melakukan aktiviti di stesen parcourse.',h:'Stesen senaman di taman rekreasi.'},
+ {t:'taman',q:'Aktiviti di stesen parcourse meningkatkan apa?',o:['Daya tahan dan kekuatan otot','Tinggi pokok','Warna rumput'],a:0,why:'Aktiviti parcourse meningkatkan daya tahan dan kekuatan otot.',h:'Ingat ayat di muka surat 60.'},
+ {t:'taman',q:'Jengkit setempat melatih otot yang mana?',o:['Otot betis','Otot dahi','Otot leher'],a:0,why:'Jengkit setempat melatih otot betis.',h:'Kita berdiri di hujung jari kaki.'},
+ {t:'taman',q:'Separa cangkung melatih otot yang mana?',o:['Otot pinggang','Otot betis','Otot dada'],a:0,why:'Separa cangkung melatih otot pinggang.',h:'Bahagian tengah badan.'},
+ {t:'taman',q:'Hamstring curl melatih otot yang mana?',o:['Otot punggung','Otot dada','Otot betis'],a:0,why:'Hamstring curl melatih otot punggung.',h:'Kaki dibengkokkan ke belakang.'},
+ {t:'taman',q:'Tekan tubi ubah suai melatih otot yang mana?',o:['Otot tangan dan otot dada','Otot betis dan otot dahi','Otot pipi dan otot telinga'],a:0,why:'Tekan tubi ubah suai melatih otot tangan dan otot dada.',h:'Tangan menolak badan.'},
+ {t:'taman',q:'Lentik belakang ubah suai melatih otot yang mana?',o:['Otot lengan dan otot pinggang','Otot mata dan otot pipi','Otot betis dan otot dahi'],a:0,why:'Lentik belakang ubah suai melatih otot lengan dan otot pinggang.',h:'Badan dilentikkan ke belakang.'},
+ {t:'taman',q:'Mengapakah kita bersenam di taman rekreasi?',o:['Supaya badan sihat dan cergas','Supaya cepat penat dan sakit','Supaya tidak perlu makan'],a:0,why:'Bersenam membantu badan sihat, cergas dan otot menjadi kuat.',h:'Senaman baik untuk badan.'},
+ /* Mari Bergayut */
+ {t:'bergayut',q:'Karim dan rakan-rakan berada di pusat latihan. Apakah aktiviti utama mereka?',o:['Latihan fizikal','Menonton televisyen','Tidur siang'],a:0,why:'Aktiviti utama mereka ialah latihan fizikal.',h:'Mereka bersenam di luar rumah.'},
+ {t:'bergayut',q:'Karim dan rakan-rakan diminta melakukan apa pada palang?',o:['Bergayut dan meniti','Melukis dan mewarna','Makan dan minum'],a:0,why:'Mereka diminta bergayut dan meniti pada palang.',h:'Lihat gambar murid di palang.'},
+ {t:'bergayut',q:'Apakah yang membantu kita bergayut dan meniti?',o:['Daya tahan dan kekuatan otot','Rambut yang panjang','Kasut yang baru'],a:0,why:'Daya tahan dan kekuatan otot membantu kita bergayut dan meniti.',h:'Fikirkan otot badan kita.'},
+ {t:'bergayut',q:'Bahagian badan manakah yang paling banyak bekerja semasa bergayut?',o:['Otot lengan','Otot betis','Otot mata'],a:0,why:'Semasa bergayut, otot lengan menarik dan menahan badan kita.',h:'Tangan kita memegang palang.'},
+ {t:'bergayut',q:'Kita boleh bergayut pada perabot di rumah.',o:TF,a:1,tf:1,why:'Salah. Bergayut hanya di palang yang kukuh dan ditemani ibu bapa.',h:'Fikirkan keselamatan kita.'},
+ {t:'bergayut',q:'Karim berkata, "Saya yakin boleh." Apakah sikap Karim?',o:['Yakin dan berani mencuba','Malas dan takut','Marah dan sedih'],a:0,why:'Karim yakin dan berani mencuba.',h:'Dia percaya pada diri sendiri.'},
+ {t:'bergayut',q:'Kawan Karim berkata, "Ayuh, cepat, kamu boleh!" Apakah yang kawannya lakukan?',o:['Memberi semangat','Mengejek kawan','Pulang ke rumah'],a:0,why:'Kawan Karim memberi semangat supaya Karim terus mencuba.',h:'Kita suka kawan yang berkata baik.'},
+ {t:'bergayut',q:'Senaman manakah yang menguatkan otot lengan?',o:['Lentik belakang ubah suai','Berbaring sambil makan','Duduk diam di kerusi'],a:0,why:'Lentik belakang ubah suai melatih otot lengan dan otot pinggang.',h:'Senaman ini menggerakkan badan.'}
+];
+var PAIRS=[
+ ['Jengkit setempat','Otot betis'],
+ ['Separa cangkung','Otot pinggang'],
+ ['Hamstring curl','Otot punggung'],
+ ['Tekan tubi ubah suai','Otot tangan dan dada'],
+ ['Lentik belakang ubah suai','Otot lengan dan pinggang']
+];
+var ZN={dada:'Dada',pinggang:'Pinggang',lengan:'Lengan dan tangan',paha:'Paha',betis:'Betis',punggung:'Punggung'};
+var AIM=[
+ {t:'lari',ex:'Berlari pantas',z:['paha','betis'],why:'Semasa berlari, otot paha dan otot betis bekerja kuat.'},
+ {t:'lari',ex:'Berjalan laju',z:['paha','betis'],why:'Berjalan laju juga melatih otot paha dan otot betis.'},
+ {t:'regang',ex:'Membongkok ke hadapan (regangan dinamik)',z:['pinggang'],why:'Membongkok ke hadapan meregang otot pinggang.'},
+ {t:'regang',ex:'Berbaring dan angkat satu kaki (regangan statik)',z:['paha'],why:'Regangan ini meregang otot paha.'},
+ {t:'taman',ex:'Jengkit setempat',z:['betis'],why:'Jengkit setempat melatih otot betis.'},
+ {t:'taman',ex:'Separa cangkung',z:['pinggang'],why:'Separa cangkung melatih otot pinggang.'},
+ {t:'taman',ex:'Hamstring curl',z:['punggung'],why:'Hamstring curl melatih otot punggung.'},
+ {t:'taman',ex:'Tekan tubi ubah suai',z:['dada','lengan'],why:'Tekan tubi ubah suai melatih otot tangan dan otot dada.'},
+ {t:'taman',ex:'Lentik belakang ubah suai',z:['lengan','pinggang'],why:'Lentik belakang ubah suai melatih otot lengan dan otot pinggang.'},
+ {t:'bergayut',ex:'Bergayut pada palang',z:['lengan'],why:'Semasa bergayut, otot lengan menarik dan menahan badan.'}
+];
+var WORDS=[
+ {t:'lari',w:'LARI',h:'Bergerak laju dengan kaki. Jom ...'},
+ {t:'lari',w:'BERLARI',h:'Kita ... di padang atau taman yang selamat.'},
+ {t:'lari',w:'LAJU',h:'Bukan perlahan, tetapi ...'},
+ {t:'lari',w:'KASUT',h:'Kita pakai ini di kaki sebelum berlari.'},
+ {t:'lari',w:'PADANG',h:'Tempat lapang untuk berlari.'},
+ {t:'lari',w:'NAFAS',h:'Kita tarik dan hembus ini dengan tenang semasa berlari.'},
+ {t:'regang',w:'REGANG',h:'Kita buat ini untuk melenturkan otot.'},
+ {t:'regang',w:'STATIK',h:'Regangan yang kekal pada satu posisi.'},
+ {t:'regang',w:'DINAMIK',h:'Regangan yang bergerak.'},
+ {t:'regang',w:'LENTUR',h:'Badan yang ... mudah membengkok.'},
+ {t:'regang',w:'PAHA',h:'Otot di bahagian atas kaki.'},
+ {t:'regang',w:'PINGGANG',h:'Otot di tengah badan.'},
+ {t:'taman',w:'PARCOURSE',h:'Stesen senaman di taman rekreasi.'},
+ {t:'taman',w:'BETIS',h:'Otot di bahagian bawah kaki.'},
+ {t:'taman',w:'CANGKUNG',h:'Senaman separa ...'},
+ {t:'taman',w:'JENGKIT',h:'Angkat tumit. Senaman ... setempat.'},
+ {t:'taman',w:'PUNGGUNG',h:'Otot yang dilatih oleh hamstring curl.'},
+ {t:'taman',w:'TAMAN',h:'Tempat rekreasi dengan stesen senaman.'},
+ {t:'bergayut',w:'BERGAYUT',h:'Memegang palang dan menggantung badan.'},
+ {t:'bergayut',w:'PALANG',h:'Kita bergayut pada ini.'},
+ {t:'bergayut',w:'LENGAN',h:'Otot ini bekerja kuat semasa bergayut.'},
+ {t:'bergayut',w:'OTOT',h:'Bahagian badan yang membantu kita bergerak.'},
+ {t:'bergayut',w:'MENITI',h:'Bergerak sepanjang palang.'},
+ {t:'bergayut',w:'KUAT',h:'Otot yang dilatih menjadi ...'}
+];
+var STM=[
+ {t:'lari',s:'Kita memakai kasut yang sesuai semasa berlari.',a:1,why:'Betul. Kasut yang sesuai melindungi kaki.'},
+ {t:'lari',s:'Kita berlari di jalan raya yang sibuk.',a:0,why:'Salah. Berlari di tempat yang lapang dan selamat.'},
+ {t:'lari',s:'Semasa berlari, otot paha dan betis bekerja.',a:1,why:'Betul. Kaki kita bekerja semasa berlari.'},
+ {t:'lari',s:'Kita minum air selepas berlari.',a:1,why:'Betul. Air menggantikan peluh yang keluar.'},
+ {t:'lari',s:'Kita terus berlari walaupun berasa sakit.',a:0,why:'Salah. Berhenti dan beritahu orang dewasa.'},
+ {t:'lari',s:'Berlari membantu otot kaki menjadi kuat.',a:1,why:'Betul. Otot yang dilatih menjadi kuat.'},
+ {t:'regang',s:'Regangan statik ialah kekal pada satu posisi.',a:1,why:'Betul. Statik bermaksud tidak bergerak.'},
+ {t:'regang',s:'Regangan dinamik dilakukan sambil bergerak.',a:1,why:'Betul. Dinamik bermaksud bergerak.'},
+ {t:'regang',s:'Regangan ditahan selama 1 saat sahaja.',a:0,why:'Salah. Tahan 10 hingga 20 saat.'},
+ {t:'regang',s:'Regangan membantu meningkatkan kelenturan.',a:1,why:'Betul. Badan menjadi lebih lentur.'},
+ {t:'regang',s:'Kita tidak perlu tahu otot mana yang diregang.',a:0,why:'Salah. Kenal pasti bahagian otot yang diregang.'},
+ {t:'regang',s:'Regangan statik dan dinamik ialah dua jenis regangan.',a:1,why:'Betul. Ada regangan statik dan regangan dinamik.'},
+ {t:'taman',s:'Parcourse ialah stesen senaman di taman rekreasi.',a:1,why:'Betul. Parcourse ada banyak stesen senaman.'},
+ {t:'taman',s:'Jengkit setempat melatih otot betis.',a:1,why:'Betul. Tumit diangkat, betis bekerja.'},
+ {t:'taman',s:'Separa cangkung melatih otot dahi.',a:0,why:'Salah. Separa cangkung melatih otot pinggang.'},
+ {t:'taman',s:'Aktiviti parcourse meningkatkan daya tahan dan kekuatan otot.',a:1,why:'Betul. Itu kebaikan parcourse.'},
+ {t:'taman',s:'Tekan tubi ubah suai melatih otot tangan dan dada.',a:1,why:'Betul. Tangan menolak badan.'},
+ {t:'taman',s:'Hamstring curl melatih otot betis.',a:0,why:'Salah. Hamstring curl melatih otot punggung.'},
+ {t:'bergayut',s:'Daya tahan dan kekuatan otot membantu kita bergayut.',a:1,why:'Betul. Otot yang kuat membantu kita bergayut.'},
+ {t:'bergayut',s:'Kita bergayut pada perabot di rumah.',a:0,why:'Salah. Bergayut hanya di palang yang kukuh.'},
+ {t:'bergayut',s:'Otot lengan bekerja semasa kita bergayut.',a:1,why:'Betul. Lengan menarik dan menahan badan.'},
+ {t:'bergayut',s:'Kita bergayut pada palang yang tidak kukuh.',a:0,why:'Salah. Pilih palang yang kukuh dan selamat.'},
+ {t:'bergayut',s:'Kawan yang memberi semangat membuat kita lebih yakin.',a:1,why:'Betul. Kata-kata baik memberi semangat.'},
+ {t:'bergayut',s:'Kita bergayut tanpa ditemani orang dewasa.',a:0,why:'Salah. Sentiasa ada pengawasan orang dewasa.'}
+];
+var CARDS=[
+ {t:'lari',k:'Berlari',d:'Bergerak laju dengan kaki. Otot paha dan betis bekerja.'},
+ {t:'lari',k:'Kasut yang sesuai',d:'Pakai kasut yang sesuai supaya kaki selamat semasa berlari.'},
+ {t:'lari',k:'Tempat selamat',d:'Berlari di padang atau taman yang lapang, jauh daripada kenderaan.'},
+ {t:'lari',k:'Minum air',d:'Minum air selepas berlari supaya badan tidak kekeringan.'},
+ {t:'regang',k:'Regangan statik',d:'Meregang dan kekal pada satu posisi. Tahan 10 hingga 20 saat.'},
+ {t:'regang',k:'Regangan dinamik',d:'Meregang otot sambil badan bergerak.'},
+ {t:'regang',k:'Kelenturan',d:'Badan mudah membengkok dan meregang.'},
+ {t:'regang',k:'Otot paha',d:'Otot di bahagian atas kaki.'},
+ {t:'regang',k:'Otot pinggang',d:'Otot di tengah badan. Membongkok ke hadapan meregangkannya.'},
+ {t:'taman',k:'Parcourse',d:'Laluan dengan banyak stesen senaman di taman rekreasi.'},
+ {t:'taman',k:'Jengkit setempat',d:'Angkat tumit berulang-ulang. Melatih otot betis.'},
+ {t:'taman',k:'Separa cangkung',d:'Bengkokkan lutut separuh jalan. Melatih otot pinggang.'},
+ {t:'taman',k:'Tekan tubi ubah suai',d:'Menolak badan dengan tangan. Melatih otot tangan dan dada.'},
+ {t:'taman',k:'Hamstring curl',d:'Bengkokkan kaki ke belakang. Melatih otot punggung.'},
+ {t:'taman',k:'Lentik belakang ubah suai',d:'Melentikkan badan ke belakang. Melatih otot lengan dan pinggang.'},
+ {t:'bergayut',k:'Bergayut',d:'Memegang palang dengan tangan dan menggantung badan.'},
+ {t:'bergayut',k:'Meniti',d:'Bergerak sepanjang palang dari hujung ke hujung.'},
+ {t:'bergayut',k:'Daya tahan otot',d:'Otot boleh bekerja lama dan tidak cepat penat.'},
+ {t:'bergayut',k:'Kekuatan otot',d:'Otot kuat untuk menarik, menolak dan mengangkat.'},
+ {t:'bergayut',k:'Otot lengan',d:'Otot di tangan. Kita guna otot ini semasa bergayut.'}
+];
+var MOVES=[
+ {id:'lari',n:'Lari di tempat',m:'Jom Berlari',how:'Lari di tempat dengan perlahan. Angkat lutut dan tarik nafas dengan tenang.',type:'time',v:20},
+ {id:'statik',n:'Regangan statik otot paha',m:'Sedia Cergas',how:'Berbaring dan angkat satu kaki ke atas. Tahan tanpa bergerak.',type:'time',v:15},
+ {id:'dinamik',n:'Regangan dinamik otot pinggang',m:'Sedia Cergas',how:'Bongkok ke hadapan perlahan-lahan, kemudian bangun semula. Ulang.',type:'rep',v:10},
+ {id:'jengkit',n:'Jengkit setempat',m:'Ke Taman Rekreasi',how:'Berdiri tegak. Angkat tumit, kemudian turunkan semula. Melatih otot betis.',type:'rep',v:10},
+ {id:'cangkung',n:'Separa cangkung',m:'Ke Taman Rekreasi',how:'Bengkokkan lutut separuh jalan seperti hendak duduk, kemudian berdiri. Melatih otot pinggang.',type:'rep',v:8},
+ {id:'tekan',n:'Tekan tubi ubah suai',m:'Ke Taman Rekreasi',how:'Tolak badan dengan tangan pada dinding, atau pada lantai dengan lutut. Melatih otot tangan dan dada.',type:'rep',v:8}
+];
+var BADGES={
+ first:{n:'Langkah Pertama',d:'Habiskan satu aktiviti',i:'<path d="M7 3v18M7 4h10l-2 4 2 4H7"/>'},
+ stars3:{n:'Bintang Tiga',d:'Dapat 3 bintang dalam kuiz',i:'<path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.2 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/>'},
+ streak5:{n:'Api Semangat',d:'5 jawapan betul berturut-turut',i:'<path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-4-1-6 1-10z"/>'},
+ muscle:{n:'Pakar Otot',d:'Padankan semua otot tanpa silap',i:'<path d="M6 12l4 4 8-9"/>'},
+ sasar:{n:'Tepat Sasaran',d:'3 bintang dalam Sasaran Otot',i:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>'},
+ huruf:{n:'Raja Huruf',d:'3 bintang dalam Susun Huruf',i:'<path d="M5 19L10 5l5 14M7 14h6M18 8v11"/>'},
+ kilat:{n:'Pantas Betul',d:'3 bintang dalam Betul Salah Kilat',i:'<path d="M13 2L5 14h6l-1 8 8-12h-6z"/>'},
+ gerak:{n:'Bintang Aktif',d:'Siapkan semua Cabaran Gerak',i:'<circle cx="14" cy="5" r="2"/><path d="M6 20l4-6 3 2 3-6M10 14l-2-4 5-1 3 3"/>'},
+ reader:{n:'Rajin Membaca',d:'Lihat semua kad imbas satu topik',i:'<path d="M4 5h7v14H4zM13 5h7v14h-7z"/>'},
+ champ:{n:'Juara Empat Topik',d:'2 bintang atau lebih kuiz di setiap topik',i:'<path d="M4 8l4 4 4-7 4 7 4-4v10H4z"/>'}
+};
+
+/* ================= state ================= */
+var STORE='pj2-cabaran-otot';
+var S={name:'',sound:true,best:{},badges:{}};
+try{var raw=localStorage.getItem(STORE);if(raw){var o=JSON.parse(raw);if(o&&typeof o==='object'){S.name=String(o.name||'').slice(0,24);S.sound=o.sound!==false;S.best=o.best||{};S.badges=o.badges||{}}}}catch(e){}
+function save(){try{localStorage.setItem(STORE,JSON.stringify(S))}catch(e){}}
+var topic='all',last=null,newB=[],kTimer=null,gTimer=null;
+
+/* ================= helpers ================= */
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function byTopic(list){return list.filter(function(x){return topic==='all'||x.t===topic})}
+var STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path class="st CLS" d="M12 2.8l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3.1 1.1-6.5L2.6 9.6l6.5-.9z"/></svg>';
+function setStars(node,n){var h='';for(var i=0;i<3;i++)h+=STAR.replace('CLS',i<n?'on':'off');node.innerHTML=h;node.setAttribute('role','img');node.setAttribute('aria-label',n+' daripada 3 bintang')}
+function bestOf(k){return S.best[k]||0}
+function award(id){if(S.badges[id])return;S.badges[id]=1;newB.push(id);save()}
+function starsFor(r){return r>=.9?3:(r>=.6?2:1)}
+var VIEWS=['home','quiz','match','sasar','susun','kilat','cards','gerak','result'];
+function clearTimers(){if(kTimer){clearInterval(kTimer);kTimer=null}if(gTimer){clearInterval(gTimer);gTimer=null}}
+function show(n){clearTimers();VIEWS.forEach(function(v){$('#v-'+v).hidden=(v!==n)});if(n==='home')renderHome();try{window.scrollTo(0,0)}catch(e){}}
+function confetti(){
+  if(RM)return;
+  var c=$('#confetti'),x=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;
+  var cols=['#FF7A2F','#FFC83D','#2FA36B','#3AA0FF','#E5456B'],ps=[],i;
+  for(i=0;i<90;i++)ps.push({x:Math.random()*c.width,y:-20-Math.random()*c.height*.4,vx:(Math.random()-.5)*3,vy:2+Math.random()*3.5,s:6+Math.random()*7,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:cols[i%5]});
+  var t0=performance.now();
+  (function f(t){x.clearRect(0,0,c.width,c.height);ps.forEach(function(p){p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/3,p.s,p.s*.6);x.restore()});if(t-t0<2600)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})(t0);
+}
+function scrollTo2(node){try{node.scrollIntoView({block:'nearest',behavior:RM?'auto':'smooth'})}catch(e){}}
+
+/* sound effects only (no speech): short tones for taps, right and wrong answers */
+var AC=null;
+function tone(f,d,type,delay,g){if(!S.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume();var t=AC.currentTime+(delay||0),o=AC.createOscillator(),v=AC.createGain();o.type=type||'sine';o.frequency.setValueAtTime(f,t);v.gain.setValueAtTime(.0001,t);v.gain.exponentialRampToValueAtTime(g||.14,t+.02);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v);v.connect(AC.destination);o.start(t);o.stop(t+d+.03)}catch(e){}}
+var sfx={
+ tap:function(){tone(520,.06,'triangle',0,.07)},
+ ok:function(){tone(660,.12,'triangle',0,.16);tone(880,.2,'triangle',.1,.16)},
+ no:function(){tone(220,.16,'sawtooth',0,.08);tone(165,.26,'sawtooth',.13,.08)},
+ win:function(){[523,659,784,1046].forEach(function(f,i){tone(f,.22,'triangle',i*.12,.16)})}
+};
+function renderSound(){var b=$('#snd');b.setAttribute('aria-pressed',S.sound?'true':'false');b.setAttribute('aria-label',S.sound?'Bunyi dihidupkan':'Bunyi dimatikan');b.title=S.sound?'Matikan bunyi':'Hidupkan bunyi'}
+$('#snd').addEventListener('click',function(){S.sound=!S.sound;save();renderSound();if(S.sound)sfx.ok()});
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('button');if(!b||b.id==='snd'||b.id==='s-check'||b.classList.contains('opt')||b.classList.contains('mitem')||b.classList.contains('tile'))return;sfx.tap()});
+
+/* ================= home ================= */
+var GAMES=[
+ {id:'quiz',t:'Kuiz Pantas',sub:function(){return (topic==='all'?10:8)+' soalan pilihan jawapan'},best:function(){return bestOf('q:'+topic)},go:function(){startQuiz()},ic:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1 1-1.1 1.8"/><path d="M12 17h.01"/>'},
+ {id:'match',t:'Padankan Otot',sub:function(){return 'Senaman dan otot yang betul'},best:function(){return bestOf('match')},go:function(){startMatch()},ic:'<circle cx="6" cy="7" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 7c4 0 6 2 6 5s2 5 0 5"/>'},
+ {id:'sasar',t:'Sasaran Otot',sub:function(){return 'Ketik otot pada badan'},best:function(){return bestOf('sasar')},go:function(){startSasar()},ic:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>'},
+ {id:'susun',t:'Susun Huruf',sub:function(){return 'Bina perkataan penting'},best:function(){return bestOf('u:'+topic)},go:function(){startSusun()},ic:'<path d="M5 19L10 5l5 14M7 14h6M18 8v11"/>'},
+ {id:'kilat',t:'Betul Salah Kilat',sub:function(){return 'Jawab sebelum masa tamat'},best:function(){return bestOf('k:'+topic)},go:function(){startKilat()},ic:'<path d="M13 2L5 14h6l-1 8 8-12h-6z"/>'},
+ {id:'cards',t:'Kad Imbas',sub:function(){return 'Ulang kaji perkataan'},best:null,go:function(){startCards()},ic:'<rect x="3" y="6" width="14" height="14" rx="3"/><path d="M7 3h12a2 2 0 0 1 2 2v12"/>'},
+ {id:'gerak',t:'Cabaran Gerak',sub:function(){return 'Bersenam di rumah bersama keluarga: lari di tempat, regangan, jengkit dan lain-lain'},best:function(){return bestOf('gerak')},go:function(){startGerak()},wide:true,ic:'<circle cx="14" cy="5" r="2"/><path d="M6 20l4-6 3 2 3-6M10 14l-2-4 5-1 3 3"/>'}
+];
+function renderHome(){
+  var box=$('#topics');box.innerHTML='';
+  Object.keys(TOPICS).forEach(function(k){
+    var T=TOPICS[k],b=el('button','topic'+(k==='all'?' wide':''));b.type='button';
+    b.setAttribute('aria-pressed',k===topic?'true':'false');
+    b.appendChild(el('span','tt',T.label));
+    b.appendChild(el('span','ts',T.sub));
+    var st=el('span','stars');setStars(st,bestOf('q:'+k));b.appendChild(st);
+    b.addEventListener('click',function(){topic=k;renderHome()});
+    box.appendChild(b);
+  });
+  var g=$('#games');g.innerHTML='';
+  GAMES.forEach(function(G){
+    var b=el('button','game'+(G.wide?' wide':''));b.type='button';
+    var ic=el('span','gi');ic.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+G.ic+'</svg>';
+    var tx=el('span','');tx.appendChild(el('span','gt',G.t));tx.appendChild(el('span','gs',G.sub()));
+    if(G.best){var st=el('span','stars');setStars(st,G.best());tx.appendChild(st)}
+    b.appendChild(ic);b.appendChild(tx);
+    b.addEventListener('click',function(){if(needName())G.go()});
+    g.appendChild(b);
+  });
+  var bd=$('#badges');bd.innerHTML='';
+  Object.keys(BADGES).forEach(function(id){
+    var B=BADGES[id],on=!!S.badges[id],d=el('div','badge'+(on?'':' locked'));
+    var m=el('div','medal');m.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+B.i+'</svg>';
+    d.appendChild(m);d.appendChild(el('p','bn',B.n));d.appendChild(el('p','bd',B.d));
+    d.setAttribute('aria-label',B.n+(on?' (sudah dapat)':' (belum dapat)'));
+    bd.appendChild(d);
+  });
+}
+var nameIn=$('#name');nameIn.value=S.name;
+nameIn.addEventListener('input',function(){S.name=nameIn.value.trim().slice(0,24);$('#name-msg').textContent='';save()});
+nameIn.addEventListener('keydown',function(e){if(e.key==='Enter')nameIn.blur()});
+function needName(){
+  S.name=nameIn.value.trim().slice(0,24);save();
+  if(S.name)return true;
+  var nb=$('#namebox');nb.classList.remove('shake');void nb.offsetWidth;nb.classList.add('shake');sfx.no();
+  $('#name-msg').textContent='Tulis nama kamu dahulu ya.';nameIn.focus();return false;
+}
+
+/* ================= quiz ================= */
+var run=null;
+function startQuiz(){
+  var pool=shuffle(byTopic(Q)).slice(0,topic==='all'?10:8);
+  run={topic:topic,items:pool,i:0,ok:0,pts:0,streak:0,maxStreak:0,done:false,hinted:false};
+  last={go:startQuiz};newB=[];
+  var r=$('#rungs');r.innerHTML='';
+  for(var i=0;i<=pool.length;i++){var g=el('i','rung');g.style.left=(i/pool.length*100)+'%';r.appendChild(g)}
+  show('quiz');renderQ();
+}
+function setTrack(){
+  var n=run.items.length,p=run.i/n*100;
+  $('#rail-fill').style.width=p+'%';$('#kid').style.left=p+'%';
+  Array.prototype.forEach.call($('#rungs').children,function(g,i){g.classList.toggle('done',i<=run.i)});
+}
+function renderQ(){
+  var q=run.items[run.i];run.done=false;run.hinted=false;
+  $('#q-count').textContent='Soalan '+(run.i+1)+' daripada '+run.items.length;
+  $('#q-tag').textContent=TOPICS[q.t].tag;
+  $('#q-text').textContent=q.q;
+  $('#q-hinttext').hidden=true;$('#q-hint').disabled=false;
+  $('#q-feedback').hidden=true;
+  var opts=q.o.map(function(t,i){return {t:t,ok:i===q.a}});
+  if(!q.tf)opts=shuffle(opts);
+  var box=$('#q-options');box.innerHTML='';box.className=q.tf?'tf':'options';
+  opts.forEach(function(o,i){
+    var b=el('button','opt');b.type='button';b.dataset.ok=o.ok?'1':'0';
+    if(q.tf){b.textContent=o.t}else{b.appendChild(el('span','ltr','ABC'.charAt(i)));b.appendChild(el('span','otxt',o.t))}
+    b.addEventListener('click',function(){answer(b,o.ok,q)});
+    box.appendChild(b);
+  });
+  $('#q-streak-n').textContent=run.streak;$('#q-points-n').textContent=run.pts;
+  $('#q-streak').classList.toggle('hot',run.streak>=3);
+  setTrack();
+}
+function answer(btn,ok,q){
+  if(run.done)return;run.done=true;
+  var all=Array.prototype.slice.call($('#q-options').children);
+  all.forEach(function(b){b.disabled=true});
+  var fb=$('#q-feedback');
+  if(ok){
+    run.ok++;run.streak++;run.maxStreak=Math.max(run.maxStreak,run.streak);run.pts+=run.hinted?5:10;
+    btn.classList.add('correct');fb.classList.remove('no');sfx.ok();
+    $('#q-ft').textContent=pick(['Betul! Hebat!','Pandai!','Syabas!','Tepat sekali!']);
+  }else{
+    run.streak=0;btn.classList.add('wrong');fb.classList.add('no');sfx.no();
+    $('#q-ft').textContent=pick(['Hampir betul!','Tidak mengapa, kita belajar.']);
+    all.forEach(function(b){if(b.dataset.ok==='1')b.classList.add('correct');else if(b!==btn)b.classList.add('dim')});
+  }
+  $('#q-fx').textContent=q.why;
+  $('#q-next').textContent=(run.i===run.items.length-1)?'Lihat keputusan':'Seterusnya';
+  fb.hidden=false;
+  $('#q-streak-n').textContent=run.streak;$('#q-points-n').textContent=run.pts;
+  $('#q-streak').classList.toggle('hot',run.streak>=3);
+  scrollTo2(fb);
+}
+$('#q-hint').addEventListener('click',function(){
+  if(!run||run.done||run.hinted)return;run.hinted=true;
+  $('#q-hinttext').textContent='Petunjuk: '+run.items[run.i].h;$('#q-hinttext').hidden=false;$('#q-hint').disabled=true;
+});
+$('#q-next').addEventListener('click',function(){
+  if(run.i<run.items.length-1){run.i++;renderQ();try{window.scrollTo(0,0)}catch(e){}}
+  else{run.i=run.items.length;setTrack();finishQuiz()}
+});
+function finishQuiz(){
+  var n=run.items.length,st=starsFor(run.ok/n),key='q:'+run.topic;
+  S.best[key]=Math.max(bestOf(key),st);
+  award('first');
+  if(st===3)award('stars3');
+  if(run.maxStreak>=5)award('streak5');
+  if(['lari','regang','taman','bergayut'].every(function(k){return bestOf('q:'+k)>=2}))award('champ');
+  save();
+  showResult({stars:st,score:run.ok+' / '+n,pts:run.pts,mode:'Kuiz Pantas: '+TOPICS[run.topic].label});
+}
+
+/* ================= match ================= */
+var M=null;
+function startMatch(){
+  M={sel:null,done:0,miss:0,lock:false};last={go:startMatch};newB=[];
+  var left=shuffle(PAIRS.map(function(p,i){return {id:i,t:p[0]}}));
+  var right=shuffle(PAIRS.map(function(p,i){return {id:i,t:p[1]}}));
+  var L=$('#m-left'),R=$('#m-right');L.innerHTML='';R.innerHTML='';
+  function mk(o,side,col){
+    var b=el('button','mitem'+(side==='r'?' right':''),o.t);b.type='button';b.dataset.id=o.id;b.dataset.side=side;
+    b.addEventListener('click',function(){pickM(b)});col.appendChild(b);
+  }
+  left.forEach(function(o){mk(o,'l',L)});right.forEach(function(o){mk(o,'r',R)});
+  $('#m-count').textContent='0 / '+PAIRS.length;$('#m-miss').textContent='0';$('#m-msg').textContent='';
+  show('match');
+}
+function pickM(b){
+  if(!M||M.lock||b.classList.contains('done'))return;
+  if(!M.sel){sfx.tap();M.sel=b;b.classList.add('sel');return}
+  if(M.sel===b){sfx.tap();b.classList.remove('sel');M.sel=null;return}
+  if(M.sel.dataset.side===b.dataset.side){sfx.tap();M.sel.classList.remove('sel');M.sel=b;b.classList.add('sel');return}
+  var a=M.sel;a.classList.remove('sel');M.sel=null;
+  if(a.dataset.id===b.dataset.id){
+    a.classList.add('done');b.classList.add('done');M.done++;sfx.ok();
+    $('#m-count').textContent=M.done+' / '+PAIRS.length;
+    var p=PAIRS[+a.dataset.id];$('#m-msg').textContent=p[0]+' melatih '+p[1].toLowerCase()+'.';
+    if(M.done===PAIRS.length){M.lock=true;setTimeout(finishMatch,900)}
+  }else{
+    M.miss++;$('#m-miss').textContent=M.miss;M.lock=true;sfx.no();
+    a.classList.add('bad');b.classList.add('bad');$('#m-msg').textContent='Belum tepat. Cuba pasangan lain.';
+    setTimeout(function(){a.classList.remove('bad');b.classList.remove('bad');M.lock=false},RM?200:450);
+  }
+}
+function finishMatch(){
+  var st=M.miss===0?3:(M.miss<=2?2:1);
+  S.best.match=Math.max(bestOf('match'),st);
+  award('first');if(M.miss===0)award('muscle');save();
+  showResult({stars:st,score:PAIRS.length+' pasangan',pts:Math.max(0,PAIRS.length*10-M.miss*3),mode:'Padankan Otot',extra:M.miss+' silap',lbl:'Silap'});
+}
+
+/* ================= body target ================= */
+var SA=null;
+(function buildFig(){
+  var zones=[
+    ['dada',56,62,48,34,12],['pinggang',58,98,44,38,12],['lengan',28,62,20,84,10],['lengan',112,62,20,84,10],
+    ['paha',56,140,22,68,11],['paha',82,140,22,68,11],['betis',57,212,20,66,10],['betis',83,212,20,66,10],
+    ['lengan',188,62,20,84,10],['lengan',272,62,20,84,10],['punggung',216,98,48,50,16],
+    ['paha',216,152,22,56,11],['paha',242,152,22,56,11],['betis',217,212,20,66,10],['betis',243,212,20,66,10]
+  ];
+  var h='<circle class="deco" cx="80" cy="30" r="20"/><rect class="deco" x="52" y="56" width="56" height="86" rx="16"/>'+
+        '<circle class="deco" cx="240" cy="30" r="20"/><rect class="deco" x="212" y="56" width="56" height="94" rx="16"/>';
+  zones.forEach(function(z){
+    h+='<g class="zone" data-z="'+z[0]+'" role="button" tabindex="0" aria-label="'+ZN[z[0]]+'"><rect x="'+z[1]+'" y="'+z[2]+'" width="'+z[3]+'" height="'+z[4]+'" rx="'+z[5]+'"/></g>';
+  });
+  h+='<text x="80" y="296" text-anchor="middle">Depan</text><text x="240" y="296" text-anchor="middle">Belakang</text>';
+  $('#s-fig').innerHTML=h;
+})();
+function startSasar(){
+  var pool=shuffle(byTopic(AIM)).slice(0,8);
+  SA={items:pool,i:0,ok:0,sel:{},done:false};last={go:startSasar};newB=[];
+  show('sasar');renderSasar();
+}
+function selList(){return Object.keys(SA.sel).filter(function(k){return SA.sel[k]})}
+function paintSasar(){
+  var sel=SA.sel,q=SA.items[SA.i];
+  Array.prototype.forEach.call($('#s-fig').querySelectorAll('.zone'),function(g){
+    var z=g.dataset.z,want=q.z.indexOf(z)>-1,on=!!sel[z];
+    g.classList.toggle('on',on&&!SA.done);
+    if(SA.done){g.classList.toggle('good',on&&want);g.classList.toggle('bad',on&&!want);g.classList.toggle('miss',!on&&want)}
+    else{g.classList.remove('good','bad','miss')}
+  });
+  var l=selList().map(function(k){return ZN[k]});
+  $('#s-picked').textContent=l.length?'Dipilih: '+l.join(', '):'Belum ada pilihan.';
+  $('#s-check').disabled=SA.done||!l.length;
+}
+function renderSasar(){
+  var q=SA.items[SA.i];SA.sel={};SA.done=false;
+  $('#s-count').textContent=(SA.i+1)+' / '+SA.items.length;$('#s-pts').textContent=SA.ok;
+  $('#s-tag').textContent=TOPICS[q.t].tag;
+  $('#s-text').textContent='Senaman: '+q.ex+'. Otot mana yang dilatih?';
+  $('#s-feedback').hidden=true;$('#s-fig').classList.remove('locked');
+  $('#s-check').hidden=false;paintSasar();
+}
+function toggleZone(g){
+  if(!SA||SA.done)return;sfx.tap();var z=g.dataset.z;SA.sel[z]=!SA.sel[z];paintSasar();
+}
+$('#s-fig').addEventListener('click',function(e){var g=e.target.closest('.zone');if(g)toggleZone(g)});
+$('#s-fig').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){var g=e.target.closest&&e.target.closest('.zone');if(g){e.preventDefault();toggleZone(g)}}});
+$('#s-check').addEventListener('click',function(){
+  if(!SA||SA.done)return;SA.done=true;
+  var q=SA.items[SA.i],got=selList().sort().join(','),want=q.z.slice().sort().join(','),ok=got===want;
+  var fb=$('#s-feedback');
+  if(ok){SA.ok++;sfx.ok();fb.classList.remove('no');$('#s-ft').textContent=pick(['Tepat sekali!','Betul! Hebat!','Pandai!'])}
+  else{sfx.no();fb.classList.add('no');$('#s-ft').textContent='Hampir betul! Lihat bahagian yang bergaris putus-putus.'}
+  $('#s-fx').textContent=q.why;$('#s-pts').textContent=SA.ok;
+  $('#s-next').textContent=(SA.i===SA.items.length-1)?'Lihat keputusan':'Seterusnya';
+  $('#s-fig').classList.add('locked');$('#s-check').hidden=true;fb.hidden=false;paintSasar();scrollTo2(fb);
+});
+$('#s-next').addEventListener('click',function(){
+  if(SA.i<SA.items.length-1){SA.i++;renderSasar();try{window.scrollTo(0,0)}catch(e){}}
+  else{
+    var n=SA.items.length,st=starsFor(SA.ok/n);S.best.sasar=Math.max(bestOf('sasar'),st);
+    award('first');if(st===3)award('sasar');save();
+    showResult({stars:st,score:SA.ok+' / '+n,pts:SA.ok*10,mode:'Sasaran Otot'});
+  }
+});
+
+/* ================= letters ================= */
+var U=null;
+function startSusun(){
+  var pool=shuffle(byTopic(WORDS)).slice(0,6);
+  U={items:pool,i:0,ok:0,pts:0,tries:0,lock:false};last={go:startSusun};newB=[];
+  show('susun');renderSusun();
+}
+function renderSusun(){
+  var w=U.items[U.i];U.lock=false;U.tries=0;
+  var letters=w.w.split(''),tiles,n=0;
+  do{tiles=shuffle(letters);n++}while(tiles.join('')===w.w&&n<8);
+  U.tiles=tiles.map(function(c){return {c:c,used:false}});
+  U.slots=letters.map(function(){return -1});
+  $('#u-count').textContent=(U.i+1)+' / '+U.items.length;$('#u-pts').textContent=U.pts;
+  $('#u-tag').textContent=TOPICS[w.t].tag;
+  $('#u-hint').textContent='Petunjuk: '+w.h;
+  $('#u-slots').style.setProperty('--n',letters.length);
+  $('#u-feedback').hidden=true;$('#u-tools').hidden=false;
+  paintSusun();
+}
+function paintSusun(cls){
+  var sl=$('#u-slots'),ti=$('#u-tiles');sl.innerHTML='';ti.innerHTML='';
+  U.slots.forEach(function(ix,p){
+    var b=el('button','slot'+(ix>-1?' fill':'')+(cls?' '+cls:''),ix>-1?U.tiles[ix].c:'');b.type='button';
+    b.setAttribute('aria-label','Petak '+(p+1)+(ix>-1?': '+U.tiles[ix].c:': kosong'));
+    b.addEventListener('click',function(){if(U.lock||U.slots[p]<0)return;U.tiles[U.slots[p]].used=false;U.slots[p]=-1;paintSusun()});
+    sl.appendChild(b);
+  });
+  U.tiles.forEach(function(t,i){
+    var b=el('button','tile',t.c);b.type='button';b.disabled=t.used||U.lock;
+    b.addEventListener('click',function(){placeTile(i)});ti.appendChild(b);
+  });
+}
+function placeTile(i){
+  if(U.lock||U.tiles[i].used)return;
+  var p=U.slots.indexOf(-1);if(p<0)return;
+  U.slots[p]=i;U.tiles[i].used=true;
+  if(U.slots.indexOf(-1)<0)checkSusun();else{sfx.tap();paintSusun()}
+}
+function checkSusun(){
+  var w=U.items[U.i],guess=U.slots.map(function(ix){return U.tiles[ix].c}).join('');
+  if(guess===w.w){
+    U.lock=true;U.ok++;sfx.ok();var p=Math.max(4,10-3*U.tries);U.pts+=p;paintSusun('good');
+    var fb=$('#u-feedback');fb.classList.remove('no');
+    $('#u-ft').textContent=pick(['Betul! Hebat!','Pandai!','Syabas!']);$('#u-fx').textContent='Perkataan: '+w.w+'. '+w.h.replace('...',w.w.toLowerCase());
+    finishSusunStep(fb);
+  }else{
+    U.tries++;U.lock=true;sfx.no();paintSusun('bad');
+    setTimeout(function(){U.slots=U.slots.map(function(){return -1});U.tiles.forEach(function(t){t.used=false});U.lock=false;paintSusun()},RM?300:700);
+  }
+}
+function finishSusunStep(fb){
+  $('#u-pts').textContent=U.pts;$('#u-tools').hidden=true;
+  $('#u-next').textContent=(U.i===U.items.length-1)?'Lihat keputusan':'Seterusnya';
+  fb.hidden=false;scrollTo2(fb);
+}
+$('#u-clear').addEventListener('click',function(){if(!U||U.lock)return;U.slots=U.slots.map(function(){return -1});U.tiles.forEach(function(t){t.used=false});paintSusun()});
+$('#u-skip').addEventListener('click',function(){
+  if(!U||U.lock)return;U.lock=true;var w=U.items[U.i],letters=w.w.split('');
+  U.tiles.forEach(function(t){t.used=false});
+  U.slots=letters.map(function(c){var ix=-1;U.tiles.forEach(function(t,i){if(ix<0&&!t.used&&t.c===c){ix=i;t.used=true}});return ix});
+  paintSusun('good');var fb=$('#u-feedback');fb.classList.add('no');
+  $('#u-ft').textContent='Jawapan: '+w.w;$('#u-fx').textContent=w.h.replace('...',w.w.toLowerCase());finishSusunStep(fb);
+});
+$('#u-next').addEventListener('click',function(){
+  if(U.i<U.items.length-1){U.i++;renderSusun();try{window.scrollTo(0,0)}catch(e){}}
+  else{
+    var n=U.items.length,st=starsFor(U.ok/n),key='u:'+topic;S.best[key]=Math.max(bestOf(key),st);
+    award('first');if(st===3)award('huruf');save();
+    showResult({stars:st,score:U.ok+' / '+n,pts:U.pts,mode:'Susun Huruf: '+TOPICS[topic].label});
+  }
+});
+
+/* ================= lightning ================= */
+var K=null,KMS=10000;
+function startKilat(){
+  var pool=shuffle(byTopic(STM)).slice(0,topic==='all'?10:6);
+  K={items:pool,i:0,ok:0,pts:0,done:false,topic:topic};last={go:startKilat};newB=[];
+  show('kilat');renderKilat();
+}
+function renderKilat(){
+  var s=K.items[K.i];K.done=false;
+  $('#k-count').textContent=(K.i+1)+' / '+K.items.length;$('#k-pts').textContent=K.pts;
+  $('#k-tag').textContent=TOPICS[s.t].tag;$('#k-text').textContent=s.s;
+  $('#k-feedback').hidden=true;
+  Array.prototype.forEach.call($('#k-opts').children,function(b){b.disabled=false;b.className='opt'});
+  var t0=Date.now(),fill=$('#k-fill'),bar=$('#k-bar');bar.classList.remove('low');fill.style.width='100%';
+  if(kTimer)clearInterval(kTimer);
+  kTimer=setInterval(function(){
+    var left=KMS-(Date.now()-t0);
+    fill.style.width=Math.max(0,left/KMS*100)+'%';
+    bar.classList.toggle('low',left<3000);
+    if(left<=0){clearInterval(kTimer);kTimer=null;answerK(null)}
+  },100);
+}
+function answerK(v){
+  if(K.done)return;K.done=true;if(kTimer){clearInterval(kTimer);kTimer=null}
+  var s=K.items[K.i],ok=(v!==null&&v===s.a),fb=$('#k-feedback');
+  Array.prototype.forEach.call($('#k-opts').children,function(b){
+    var bv=+b.dataset.v;b.disabled=true;
+    if(bv===s.a)b.classList.add('correct');else if(v!==null&&bv===v)b.classList.add('wrong');else b.classList.add('dim');
+  });
+  if(ok){K.ok++;K.pts+=10;sfx.ok();fb.classList.remove('no');$('#k-ft').textContent=pick(['Laju dan betul!','Pandai!','Tepat sekali!'])}
+  else{sfx.no();fb.classList.add('no');$('#k-ft').textContent=(v===null)?'Masa tamat!':'Hampir betul!'}
+  $('#k-fx').textContent=s.why;$('#k-pts').textContent=K.pts;
+  $('#k-next').textContent=(K.i===K.items.length-1)?'Lihat keputusan':'Seterusnya';
+  fb.hidden=false;scrollTo2(fb);
+}
+Array.prototype.forEach.call($('#k-opts').children,function(b){b.addEventListener('click',function(){if(K)answerK(+b.dataset.v)})});
+$('#k-next').addEventListener('click',function(){
+  if(K.i<K.items.length-1){K.i++;renderKilat();try{window.scrollTo(0,0)}catch(e){}}
+  else{
+    var n=K.items.length,st=starsFor(K.ok/n),key='k:'+K.topic;S.best[key]=Math.max(bestOf(key),st);
+    award('first');if(st===3)award('kilat');save();
+    showResult({stars:st,score:K.ok+' / '+n,pts:K.pts,mode:'Betul Salah Kilat: '+TOPICS[K.topic].label});
+  }
+});
+
+/* ================= flash cards ================= */
+var C=null;
+function startCards(){
+  var list=byTopic(CARDS);
+  C={list:list,i:0,seen:{}};last={go:startCards};newB=[];
+  show('cards');renderCard();
+}
+function renderCard(){
+  var c=C.list[C.i];
+  $('#flash').classList.remove('flip');
+  $('#c-tag').textContent=TOPICS[c.t].tag;$('#c-term').textContent=c.k;$('#c-def').textContent=c.d;
+  $('#c-count').textContent=(C.i+1)+' / '+C.list.length;
+  C.seen[c.k]=1;$('#c-msg').textContent='';
+  if(Object.keys(C.seen).length===C.list.length&&!S.badges.reader){award('reader');$('#c-msg').textContent='Lencana baharu: Rajin Membaca!';sfx.win();confetti()}
+}
+$('#flash').addEventListener('click',function(){$('#flash').classList.toggle('flip')});
+$('#c-next').addEventListener('click',function(){C.i=(C.i+1)%C.list.length;renderCard()});
+$('#c-prev').addEventListener('click',function(){C.i=(C.i-1+C.list.length)%C.list.length;renderCard()});
+$('#c-shuffle').addEventListener('click',function(){C.list=shuffle(C.list);C.i=0;renderCard()});
+
+/* ================= move challenge ================= */
+var G=null,CIRC=326.7;
+function startGerak(){
+  G={done:{},cur:-1,count:0,running:false};last={go:startGerak};newB=[];
+  $('#g-panel').hidden=true;show('gerak');renderGList();
+}
+function gDoneCount(){return Object.keys(G.done).length}
+function renderGList(){
+  var box=$('#g-list');box.innerHTML='';
+  MOVES.forEach(function(m,i){
+    var b=el('button','gitem'+(G.cur===i?' sel':'')+(G.done[m.id]?' done':''));b.type='button';
+    var tx=el('span','');tx.appendChild(el('span','gn',m.n));
+    tx.appendChild(el('span','gm',m.m+' · '+(m.type==='time'?m.v+' saat':m.v+' kali')));
+    b.appendChild(tx);b.appendChild(el('span','gst',G.done[m.id]?'Siap':'Belum'));
+    b.addEventListener('click',function(){openMove(i)});box.appendChild(b);
+  });
+  var d=gDoneCount();$('#g-count').textContent=d+' / '+MOVES.length+' siap';$('#g-finish').disabled=d===0;
+}
+function openMove(i){
+  if(gTimer){clearInterval(gTimer);gTimer=null}
+  G.cur=i;G.count=0;G.running=false;renderGList();renderMove();scrollTo2($('#g-panel'));
+}
+function renderMove(){
+  var m=MOVES[G.cur],p=$('#g-panel');p.hidden=false;p.innerHTML='';
+  p.appendChild(el('h3','',m.n));
+  p.appendChild(el('p','how',m.how));
+  if(G.done[m.id]){
+    p.appendChild(el('p','bigcount','Siap!'));
+    var nx=el('button','btn primary','Cabaran seterusnya');nx.type='button';
+    nx.addEventListener('click',function(){var k=MOVES.findIndex(function(x){return !G.done[x.id]});if(k>-1)openMove(k);else{p.hidden=true}});
+    p.appendChild(nx);return;
+  }
+  if(m.type==='time'){
+    var ring=el('div','ring');
+    ring.innerHTML='<svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"/><circle class="fg" id="g-fg" cx="60" cy="60" r="52"/></svg><div class="num" id="g-num">'+m.v+'</div>';
+    p.appendChild(ring);
+    var b=el('button','btn primary bigbtn','Mula');b.type='button';b.id='g-go';
+    b.addEventListener('click',function(){
+      if(G.running){clearInterval(gTimer);gTimer=null;G.running=false;b.textContent='Mula';$('#g-num').textContent=m.v;$('#g-fg').style.strokeDashoffset=0;return}
+      G.running=true;b.textContent='Berhenti';var end=Date.now()+m.v*1000;
+      gTimer=setInterval(function(){
+        var left=end-Date.now();
+        $('#g-num').textContent=Math.max(0,Math.ceil(left/1000));
+        $('#g-fg').style.strokeDashoffset=String(CIRC*(1-Math.max(0,left)/(m.v*1000)));
+        if(left<=0){clearInterval(gTimer);gTimer=null;G.running=false;completeMove(m)}
+      },100);
+    });
+    p.appendChild(b);
+  }else{
+    var big=el('p','bigcount','0 / '+m.v);big.id='g-big';p.appendChild(big);
+    var plus=el('button','btn primary bigbtn','+1 Satu kali');plus.type='button';
+    plus.addEventListener('click',function(){G.count++;$('#g-big').textContent=G.count+' / '+m.v;if(G.count>=m.v)completeMove(m)});
+    p.appendChild(plus);
+    var rs=el('button','btn small','Ulang dari awal');rs.type='button';
+    rs.addEventListener('click',function(){G.count=0;$('#g-big').textContent='0 / '+m.v});
+    p.appendChild(rs);
+  }
+}
+function completeMove(m){
+  G.done[m.id]=1;renderGList();renderMove();
+  if(gDoneCount()===MOVES.length){sfx.win();confetti()}else sfx.ok();
+}
+$('#g-finish').addEventListener('click',function(){
+  var d=gDoneCount();if(!d)return;
+  var st=d===MOVES.length?3:(d>=4?2:1);S.best.gerak=Math.max(bestOf('gerak'),st);
+  award('first');if(d===MOVES.length)award('gerak');save();
+  showResult({stars:st,score:d+' / '+MOVES.length,pts:d*10,mode:'Cabaran Gerak',extra:d+' cabaran',lbl:'Siap'});
+});
+
+/* ================= result ================= */
+var MSG={3:'Hebat! Otot kamu kuat dan otak kamu pintar.',2:'Bagus! Cuba lagi untuk dapat tiga bintang.',1:'Syabas kerana mencuba. Baca semula buku teks dan cuba lagi.'};
+function fmtDate(){var d=new Date();try{return d.toLocaleDateString('ms-MY',{day:'numeric',month:'short',year:'numeric'})}catch(e){return d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear()}}
+function showResult(r){
+  $('#r-name').textContent=S.name||'Murid Hebat';
+  $('#r-mode').textContent=r.mode;
+  setStars($('#r-stars'),r.stars);
+  $('#r-score').textContent=r.score;
+  $('#r-msg').textContent=MSG[r.stars];
+  $('#r-date').textContent=fmtDate();
+  $('#r-ptl').textContent=r.lbl||'Mata';
+  $('#r-points').textContent=r.extra?r.extra:String(r.pts);
+  var nb=$('#r-badges');nb.innerHTML='';
+  newB.forEach(function(id){
+    var B=BADGES[id],d=el('div','nb');
+    var m=el('div','medal');m.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+B.i+'</svg>';
+    var t=el('div');t.appendChild(el('div','','Lencana baharu: '+B.n));t.appendChild(el('div','bd',B.d));
+    d.appendChild(m);d.appendChild(t);nb.appendChild(d);
+  });
+  show('result');
+  if(r.stars>=2){sfx.win();confetti()}else sfx.ok();
+}
+$('#r-home').addEventListener('click',function(){show('home')});
+$('#r-again').addEventListener('click',function(){if(last&&last.go)last.go();else show('home')});
+Array.prototype.forEach.call(document.querySelectorAll('[data-exit]'),function(b){b.addEventListener('click',function(){show('home')})});
+
+renderSound();renderHome();
+})();
+</script>
+
+</body></html>
